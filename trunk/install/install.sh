@@ -13,7 +13,7 @@ apt-get --assume-yes purge apache2*
 
 apt-get --assume-yes install xfdesktop4 xfce4-utils xvfb x11vnc apache2-mpm-prefork python-pexpect imagemagick
 
-apt-get --assume-yes install abiword ace-of-penguins anacron audacious audacious-plugins chromium-browser chromium-browser-l10n desktop-file-utils evince file-roller galculator gecko-mediaplayer gnome-mplayer gnome-system-tools gnumeric gpicview icedtea-plugin jockey-gtk language-selector leafpad logrotate mtpaint osmo pidgin scrot simple-scan software-properties-gtk sylpheed sylpheed-i18n synaptic transmission ttf-liberation ttf-ubuntu-font-family ttf-unfonts-core ttf-wqy-microhei ubuntu-extras-keyring unzip update-notifier x11-utils xchat xdg-user-dirs xpad xscreensaver zip 
+apt-get --assume-yes install abiword ace-of-penguins anacron audacious audacious-plugins chromium-browser chromium-browser-l10n desktop-file-utils evince file-roller galculator gnome-system-tools gnumeric gpicview jockey-gtk language-selector leafpad logrotate mtpaint osmo pidgin scrot simple-scan software-properties-gtk sylpheed sylpheed-i18n synaptic transmission ttf-liberation ttf-ubuntu-font-family ttf-unfonts-core ttf-wqy-microhei unzip update-notifier x11-utils xchat xdg-user-dirs xpad xscreensaver zip 
 
 
 cd /tmp/
