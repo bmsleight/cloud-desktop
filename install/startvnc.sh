@@ -1,4 +1,5 @@
 #!/bin/bash
+/root/start_connect_switch.sh &
 su cloud -c "Xvfb :1 -cc 4 -screen 0 1024x768x16 &"
 sleep 5
 # -listen ipaddr 
