@@ -38,6 +38,7 @@ echo "/bin/bash /root/startvnc.sh &" > /etc/rc.local
 ############################################################
 #ajaxplorer
 ############################################################
+apt-get --assume-yes install php5 php5-mcrypt libapache2-mod-php5
 wget "http://downloads.sourceforge.net/project/ajaxplorer/ajaxplorer/3.1.1/ajaxplorer-core-3.1.1.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fajaxplorer%2F&ts=1292661903&use_mirror=garr" -O ajaxplorer.zip
 unzip ajaxplorer.zip -d /var/www/
 mv /var/www/ajaxplorer-core-3.1.1 /var/www/file
@@ -45,12 +46,15 @@ mv /var/www/ajaxplorer-core-3.1.1 /var/www/file
 # alas this is stored in plain text.
 cat /var/www/file/server/conf/conf.php | sed s/"admin"/"$PASSWORD_USER"/ >/tmp/conf.php
 mv /tmp/conf.php /var/www/file/server/conf/conf.php
+mkdir /var/www/file/public
 chown www-data.www-data /var/www/file -R
 
 adduser cloud www-data
 ln -s /var/www/file/files /home/cloud/Desktop/WebFileManager
+wget http://cloud-desktop.googlecode.com/svn-history/trunk/install/index.html -O /var/www/index.html
+chown www-data.www-data /var/www/index.html
 
-
+#
 
 ############################################################
 # Shell in a box
@@ -59,7 +63,7 @@ wget "http://shellinabox.googlecode.com/files/shellinabox_2.10-1_i386.deb" -O sh
 dpkg -i shellinabox.deb
 echo "SHELLINABOX_ARGS=\"\${SHELLINABOX_ARGS} -t --localhost-only\" " >>/etc/default/shellinabox
 
-a2enmod ssl rewrite proxy proxy proxy_html proxy_http headers
+a2enmod ssl rewrite proxy proxy proxy_html proxy_http headers 
 
 # Make certificates...
 # Cheat and sue the x11vnc sertificates.....
