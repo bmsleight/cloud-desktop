@@ -73,8 +73,8 @@
 	#   /usr/share/doc/apache2.2-common/README.Debian.gz for more info.
 	#   If both key and certificate are stored in the same file, only the
 	#   SSLCertificateFile directive is needed.
-	SSLCertificateFile    /etc/ssl/certs/ssl-cert-snakeoil.pem
-	SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+	SSLCertificateFile    /root/.vnc/certs/CA/newcerts/01.pem
+	SSLCertificateKeyFile /root/.vnc/certs/server.pem
 
 	#   Server Certificate Chain:
 	#   Point SSLCertificateChainFile at a file containing the

@@ -40,12 +40,16 @@ echo "/bin/bash /root/startvnc.sh &" > /etc/rc.local
 ############################################################
 wget "http://downloads.sourceforge.net/project/ajaxplorer/ajaxplorer/3.1.1/ajaxplorer-core-3.1.1.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fajaxplorer%2F&ts=1292661903&use_mirror=garr" -O ajaxplorer.zip
 unzip ajaxplorer.zip -d /var/www/
-mv /var/www/ajaxplorer-core-3.1.1 /var/www/ajaxplorer
+mv /var/www/ajaxplorer-core-3.1.1 /var/www/file
 # username for ajaxplorer is admin, password as asked at start of script. 
 # alas this is stored in plain text.
-cat /var/www/ajaxplorer/server/conf/conf.php | sed s/"admin"/"$PASSWORD_USER"/ >/tmp/conf.php
-mv /tmp/conf.php /var/www/ajaxplorer/server/conf/conf.php
-chown www-data.www-data /var/www/ajaxplorer -R
+cat /var/www/file/server/conf/conf.php | sed s/"admin"/"$PASSWORD_USER"/ >/tmp/conf.php
+mv /tmp/conf.php /var/www/file/server/conf/conf.php
+chown www-data.www-data /var/www/file -R
+
+adduser cloud www-data
+ln -s /var/www/file/files /home/cloud/Desktop/WebFileManager
+
 
 
 ############################################################
@@ -55,11 +59,12 @@ wget "http://shellinabox.googlecode.com/files/shellinabox_2.10-1_i386.deb" -O sh
 dpkg -i shellinabox.deb
 echo "SHELLINABOX_ARGS=\"\${SHELLINABOX_ARGS} -t --localhost-only\" " >>/etc/default/shellinabox
 
-# We only want https - We may be using any network. So force https.
 a2enmod ssl rewrite proxy proxy proxy_html proxy_http headers
 
 # Make certificates...
+# Cheat and sue the x11vnc sertificates.....
 
+# We only want https - We may be using any network. So force https.
 echo "<VirtualHost *:80>
 > <Location / >
 >         RewriteEngine   on
@@ -80,9 +85,9 @@ ip=`grep address /etc/network/interfaces | grep -v 127.0.0.1 | grep -v ::1 | awk
 wget "http://www.karlrunge.com/x11vnc/connect_switch" -O /root/connect_switch.sh
 chmod +x /root/connect_switch.sh
 echo "#!/bin/sh
-export CONNECT_SWITCH_LISTEN=41.223.52.199:443
+export CONNECT_SWITCH_LISTEN=$IP:443
 export CONNECT_SWITCH_HTTPD=127.0.0.1:443
-export CONNECT_SWITCH_ALLOWED=localhost:5900,ottoline:5915
+export CONNECT_SWITCH_ALLOWED=localhost:5900
 export CONNECT_SWITCH_LOOP=1
 export CONNECT_SWITCH_LOOP=BG
 
