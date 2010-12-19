@@ -99,6 +99,15 @@ export CONNECT_SWITCH_LOOP=BG
 chmod +x /root/start_connect_switch.sh
 
 
+############################################################
+# Open VPN
+############################################################
+
+wget "http://cloud-desktop.googlecode.com/svn-history/trunk/install/debian-openvpn.sh" -O /root/debian-openvpn.sh
+/bin/bash /root/debian-openvpn.sh
+cp /root/keys.tgz /home/cloud/Desktop/WebFileManager/
+chown www-data.www-data /home/cloud/Desktop/WebFileManager/keys.tgz
+
 echo "To start the services running, enter the following command :-"
 echo "nohup /bin/bash /root/startvnc.sh &"
 echo "... or reboot via the VPS control panel."
