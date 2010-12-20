@@ -2,6 +2,10 @@
 
 #installation
 
+echo "Set hostane, e.g. cloud-desktop ? "
+read HOSTNAME
+hostname $HOSTNAME
+
 echo "Password for the user cloud ? "
 read PASSWORD_USER
 
@@ -27,7 +31,7 @@ chmod 777 /dev/shm
 cd /tmp/
 rm /tmp/setup*
 wget http://cloud-desktop.googlecode.com/svn/trunk/install/setup.py
-python /tmp/setup.py --password="$PASSWORD_USER" --clear="$PASSWORD_CLEAR"
+python /tmp/setup.py --password="$PASSWORD_USER" --hostname="$HOSTNAME"
 
 rm /tmp/startvnc.sh
 wget http://cloud-desktop.googlecode.com/svn/trunk/install/startvnc.sh
