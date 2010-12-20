@@ -31,7 +31,7 @@ def add_user_cloud(password):
     child.read()
     child.close()
 
-def setup_x11vnc(password):
+def setup_x11vnc(password, hostname):
     pexpect_simple('rm -R /root/.vnc/certs')
     child = pexpect.spawn('x11vnc -sslGenCA')
     child.logfile = sys.stdout 
@@ -46,11 +46,11 @@ def setup_x11vnc(password):
     child.expect('Locality Name \(eg\, city\) \[\]:')
     child.sendline('')
     child.expect('Organization Name \(eg\, company\) \[x11vnc server CA\]')
-    child.sendline('Cloud Calibre')
+    child.sendline('Cloud Desktop of ' + str(hostname))
     child.expect('Organizational Unit Name \(eg\, section\) \[\]')
-    child.sendline('Cloud Calibre Unit')
+    child.sendline('Cloud Desktop')
     child.expect('Common Name \(eg\, YOUR name\) \[root x11vnc server CA\]:')
-    child.sendline('root Cloud Desktop CA')
+    child.sendline('root ' + str(hostname) + ' CA')
     child.expect('Email Address \[x11vnc\@CA.nowhere\]:')
     child.sendline('cloud@example.com')
     child.expect('Press Enter to print the cacert\.pem certificate to the screen: ')
@@ -67,11 +67,11 @@ def setup_x11vnc(password):
     child.expect('Locality Name \(eg\, city\) \[\]:')
     child.sendline('')
     child.expect('Organization Name \(eg\, company\) \[x11vnc server\]')
-    child.sendline('Cloud Desktop')
+    child.sendline('Cloud Desktop of ' + str(hostname))
     child.expect('Organizational Unit Name \(eg\, section\) \[\]')
     child.sendline('Cloud Desktop Unit')
     child.expect('Common Name \(eg\, YOUR name\) \[x11vnc server\]:')
-    child.sendline('root Cloud Desktop CA')
+    child.sendline(str(hostname))
     child.expect('Email Address \[x11vnc\@server\.nowhere\]:') 
     child.sendline('cloud@example.com')
     child.expect('A challenge password \[\]:')
@@ -94,7 +94,7 @@ def setup_x11vnc(password):
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "p:c:", ["password=", "clear="])
+        opts, args = getopt.getopt(sys.argv[1:], "p:h:", ["password=", "hostname="])
     except getopt.GetoptError, err:
         # print help information and exit:
         print str(err) # will print something like "option -a not recognized"
@@ -106,14 +106,14 @@ def main():
     for o, a in opts:
         if o in ("-p", "--password"):
             password_user = a
-        elif o in ("-c", "--clear"):
-            password_clear = a
+        elif o in ("-h", "--hostname"):
+            hostname = a
         else:
             assert False, "unhandled option"
     if password_user:
         # set up stuff
         add_user_cloud(password_user)
-        setup_x11vnc(password_user)
+        setup_x11vnc(password_user, hostname)
         print "**** SETUP Ran with no errors ****"
 
 if __name__ == "__main__":
